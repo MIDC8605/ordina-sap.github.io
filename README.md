@@ -1,6 +1,6 @@
-# Ordina JWorks Tech Blog
+# Ordina SAP Tech Blog
 
-The JWorks Tech Blog is powered by [Jekyll](https://jekyllrb.com).
+The SAP Tech Blog is powered by [Jekyll](https://jekyllrb.com).
 The blog posts are written in [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) and are converted to HTML by Jekyll.
 Most code editors and IDEs have support for Markdown files.
 Some of them, such as IntelliJ, offer a preview view to see the result as you type.
@@ -37,6 +37,14 @@ In order to set 2.4.0 as the default Ruby version you can use the following comm
 - Run `jekyll serve` in the root directory of the tech blog
     - If your post is to be published in the future, run `jekyll serve --future`
 - Browse to [http://localhost:4000/](http://localhost:4000/)
+
+## Running Jekyll on Windows 10
+- You need to install [Ubuntu for Windows](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+- Start the Ubuntu shell using the start menu, you can find your C: drive under /mnt/c
+- Follow the [Jekyll install guide on Windows](https://jekyllrb.com/docs/windows/)
+- Install Imagemagick in Ubuntu via `sudo apt install imagemagick`
+- Run `bundle install` in the source folder
+- To run a local server run `bundle exec jeckyll server --host [ip address]`, the host is important because the site won't be accessible when running in localhost on Ubuntu
 
 ## Add yourself as an author
 - Create a **feature branch**, starting from **source**: feature/author-update-john-doe
@@ -105,3 +113,7 @@ need to go in the `css` directory.
 These files need to begin with two lines of `---` for Jekyll to pick them up for later compilation.
 
 You can read more on Jekyll and SASS integration [here](https://jekyllrb.com/docs/assets/).
+
+
+
+
