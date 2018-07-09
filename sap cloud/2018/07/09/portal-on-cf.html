@@ -183,7 +183,6 @@
   <li><a href="#what-do-you-need">What do you need?</a></li>
   <li><a href="#create-a-manifest">Create a manifest</a></li>
   <li><a href="#configure-and-deploy-portal">Configure and deploy Portal</a></li>
-  <li><a href="#build-and-deploy-app">Build and deploy app</a></li>
 </ol>
 
 <h2 id="what-do-you-need">What do you need?</h2>
@@ -252,12 +251,12 @@ Now, when you want to create an app tile, which path should you use? You cannot 
 
 <p>The xs-app.json contains the url regex that needs to be captured, it could look something like this:</p>
 
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="s2">"routes"</span><span class="p">:[{</span><span class="s2">"localDir"</span><span class="p">:</span><span class="s2">"themes"</span><span class="p">,</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"/themes/(.*)"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cacheControl"</span><span class="p">:</span><span class="s2">"public, max-age=31536000,must-revalidate"</span><span class="p">,</span><span class="s2">"target"</span><span class="p">:</span><span class="s2">"$1"</span><span class="p">},</span><span class="w">
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="s2">"routes"</span><span class="p">:[{</span><span class="s2">"localDir"</span><span class="p">:</span><span class="s2">"themes"</span><span class="p">,</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"/themes/(.*)"</span><span class="p">,</span>
+    <span class="s2">"cacheControl"</span><span class="p">:</span><span class="s2">"public, max-age=31536000,must-revalidate"</span><span class="p">,</span><span class="s2">"target"</span><span class="p">:</span><span class="s2">"$1"</span><span class="p">},</span>
    
-    </span><span class="p">{</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"^/sci/(.*)"</span><span class="p">,</span><span class="s2">"target"</span><span class="p">:</span><span class="s2">"$1"</span><span class="p">,</span><span class="s2">"destination"</span><span class="p">:</span><span class="s2">"sci"</span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"^/frontend-yourapp/(.*)"</span><span class="p">,</span><span class="s2">"target"</span><span class="p">:</span><span class="s2">"$1"</span><span class="p">,</span><span class="s2">"destination"</span><span class="p">:</span><span class="s2">"frontend-yourapp"</span><span class="p">},</span><span class="w">
-</span></code></pre></div></div>
+    <span class="p">{</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"^/sci/(.*)"</span><span class="p">,</span><span class="s2">"target"</span><span class="p">:</span><span class="s2">"$1"</span><span class="p">,</span><span class="s2">"destination"</span><span class="p">:</span><span class="s2">"sci"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"^/frontend-yourapp/(.*)"</span><span class="p">,</span><span class="s2">"target"</span><span class="p">:</span><span class="s2">"$1"</span><span class="p">,</span><span class="s2">"destination"</span><span class="p">:</span><span class="s2">"frontend-yourapp"</span><span class="p">},</span>
+</code></pre></div></div>
 
 <p>This file tells the Portal to redirect urls starting with <em>/sci</em> to point to destination SCI.
 In my case this points to my backend, using SAP Cloud Integration, you can use any name but I have only tried this with internet reachable systems. I still need to try this with on-premise systems that have to be accessed over the SAP Cloud Connector.</p>
@@ -354,7 +353,7 @@ For the portal to work you also need a XSUAA service instance to bind to. If you
 
 <h2 id="check-datasource-url-in-the-app">Check datasource url in the app</h2>
 
-<p>A last point of attention would be the datasource in the SAPUI5 app. Make sure the datasource matched the url we configured in the destinations of the portal.</p>
+<p>A last point of attention would be the datasource in the SAPUI5 app. Make sure the datasource matched the url we configured in the destinations of the portal. Redeploy your SAPUI5 app if required.</p>
 
 <p>Also, in my experience, the Portal acts as the AppRouter would act. So when using url’s pointing to location behind an AppRouter, it won’t work.</p>
 
