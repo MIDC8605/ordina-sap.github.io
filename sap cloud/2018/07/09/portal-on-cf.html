@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html>
+<head>
+        <meta charset="utf-8">
+    <meta name="description" content="We build innovative solutions with Java and JavaScript. To support this mission, we have several Competence Centers. From within those Competence Centers, we provide coaching to the employee and expert advice towards our customer. In order to keep in sync with the latest technologies and the latest trends, we frequently visit conferences around the globe.
+">
+    <meta name="keywords" content="Ordina,SAP,Cloud Platform,Cloud Foundry,ABAP,SAP consultant,SAP consultancy,Netweaver,Webdynpro,idocs,EDI">
+    <meta name="author" content="Ordina Belgium">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/favicons/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/img/favicons/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/img/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/img/favicons/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/img/favicons/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="/img/favicons/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="/img/favicons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/img/favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/img/favicons/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="/img/favicons/favicon-128.png" sizes="128x128" />
+
+    
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Deploying Fiori apps and Portal on SAP Cloud Foundry - Gert Vermeersch">
+    <meta name="twitter:description" content="Ordina SAP Tech Blog">
+    <meta name="twitter:image" content="http://ordina-sap.github.io/img/portal-on-cf/launchpad.png"/>
+
+    <!-- Facebook Open Graph -->
+    <meta property="og:url" content="http://ordina-sap.github.io/sap%20cloud/2018/07/09/portal-on-cf.html"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Deploying Fiori apps and Portal on SAP Cloud Foundry - Gert Vermeersch"/>
+    <meta property="og:description" content="Ordina SAP Tech Blog"/>
+    <meta property="og:image" content="http://ordina-sap.github.io/img/portal-on-cf/launchpad.png"/>
+
+    
+    <title>Deploying Fiori apps and Portal on SAP Cloud Foundry - Gert Vermeersch &mdash; Ordina SAP Tech Blog</title>
+    
+
+        <!-- Styles -->
+    <!-- Font awesome CSS -->
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Magnific Popup -->
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <!-- Owl carousel -->
+    <link href="/css/owl.carousel.css" rel="stylesheet">
+
+    <!-- CSS for this page -->
+
+    <!-- Syntax highlighting -->
+    <link href="/css/syntax.css" rel="stylesheet">
+
+
+    <!--[if lte IE 8]>
+    <script src="/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="/css/main.css"/>
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/css/ie9.css"/><![endif]-->
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="/css/ie8.css"/><![endif]-->
+
+    <!-- Custom CSS. Type your CSS code in custom.css file -->
+    <link href="/css/custom.css" rel="stylesheet">
+
+    <!-- Vertical timeline -->
+	<link rel="stylesheet" href="/css/vertical-timeline/style.css"> <!-- Resource style -->
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="#">
+
+    <script src="https://use.typekit.net/gzh0mbm.js"></script>
+    <script>
+        try {
+            Typekit.load({async: true});
+        } catch (e) {
+        }
+    </script>
+</head>
+
+<body>
+<div id="header-image"></div>
+
+
+<!-- Page Wrapper -->
+<div id="page-wrapper">
+
+        <!-- Header -->
+    <header id="header">
+        <h1>
+            <a href="/">
+                Ordina SAP Tech Blog
+            </a>
+        </h1>
+
+        <nav>
+            <a href="#menu">Menu</a>
+            <form action="/search/" method="get" class="header-search search-form">
+                <input type="text" id="search-box-header" name="query" placeholder="Search &hellip;">
+            </form>
+        </nav>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+        <div class="inner">
+            <h2>Menu</h2>
+            <ul class="links">
+                <li class="menu-item"><a href="/">Home</a></li>
+                <li class="menu-item"><a href="/about">About Us</a></li>
+                <li class="menu-item"><a href="/jobs">Jobs</a></li>
+                <!-- <li class="menu-item"><a href="/launch-your-career">Career</a></li> -->
+                <li class="menu-item"><a href="/search">Search</a></li>
+                <li class="menu-item"><a href="/contact">Contact Us</a></li>
+            </ul>
+            <a href="#" class="close">Close</a>
+        </div>
+    </nav>
+
+    <section id="banner">
+        <header>
+            <div class="inner">
+                
+
+                <h2>Deploying Fiori apps and Portal on SAP Cloud Foundry</h2>
+                
+
+                
+                    Posted Jul 9, 2018
+
+
+    in <a href="/categories/sap-cloud/">SAP Cloud</a>
+
+
+
+    by
+    
+        <a href="/author/gert-vermeersch/">Gert Vermeersch</a>
+        
+    
+
+
+
+    <br/>
+    <i class="fa fa-tags"></i>
+    
+        <a href="/tags/sap-cloud/">SAP Cloud</a>, 
+    
+        <a href="/tags/cloud-foundry/">Cloud Foundry</a>, 
+    
+        <a href="/tags/portal/">Portal</a>, 
+    
+        <a href="/tags/sapui5/">SAPUI5</a>, 
+    
+        <a href="/tags/fiori/">Fiori</a>
+    
+
+                
+
+                
+
+            </div>
+        </header>
+    </section>
+
+    <section id="wrapper">
+        <div class="inner">
+            <section id="one" class="wrapper spotlight style1 post-body">
+    <div class="inner" style="text-align: left;">
+        <div class="content">
+            <h1 id="deploying-your-fiori-apps-and-fiori-launchpad-on-sap-cloud-foundry">Deploying your Fiori apps and Fiori Launchpad on SAP Cloud Foundry</h1>
+
+<p>Building and deploying Fiori apps and installing SAP Portal is easy on the SAP Cloud Platform NEO environment. Since everything is automated and done for you.</p>
+
+<p>On the SAP Cloud Foundry environment things quickly get a bit more technical. SAP may, or may not improve this in the future by hiding away the technical details. Personally, I like the more technical aspect of CloudFoundry vs NEO. The fact that you know more in detail about what is going on gives you more to work with when something goes wrong. In this article, I’m going to explain how I deployed a couple of SAPUI5 apps on CloudFoundry, configured Portal to use them, and added destinations and security for the whole thing to work.</p>
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ol>
+  <li><a href="#what-do-you-need">What do you need?</a></li>
+  <li><a href="#create-a-manifest">Create a manifest</a></li>
+  <li><a href="#configure-and-deploy-portal">Configure and deploy Portal</a></li>
+  <li><a href="#build-and-deploy-app">Build and deploy app</a></li>
+</ol>
+
+<h2 id="what-do-you-need">What do you need?</h2>
+
+<ul>
+  <li>A text editor of your choice (I really like Visual Studio Code)</li>
+  <li>The <a href="https://docs.cloudfoundry.org/cf-cli/install-go-cli.html">CloudFoundry CLI</a></li>
+  <li>Some kind of SAPUI5 application you want to deploy</li>
+  <li>SAP Cloud Platform Cloud Foundry account, this can be a trial or productive account</li>
+</ul>
+
+<h2 id="create-a-manifest">Create a manifest</h2>
+
+<p>If you have experience with developping SAPUI5 apps, you are probably familiar with the <code class="highlighter-rouge">neo-app.json</code> file. This basically tells the NEO HTML5 service what to do with authentication, destinations, where to find the index file… The container we are going to create is not aware of this file and will ignore it. This means that we have to handle everything in the neo-app.json in some other way. The first step is the manifest.yaml. The manifest that we are going to create is not to be confused with the existing manifest.json, which is used by the SAPUI5 bootstrapping process.</p>
+
+<p><code class="highlighter-rouge">manifest.yaml</code> has to be created in the root of your project directory. It tells CloudFoundry what kind of buildpack to use, the name, memory limit, host and how to start the application.
+Since a SAPUI5 app is nothing more than a collection of HTML, CSS and JS files to be served, we can use a simple webserver like nginx to host our files.</p>
+
+<p>This is a working example of a manifest of one of my apps:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">applications</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">YourApp</span>
+  <span class="na">path</span><span class="pi">:</span> <span class="s">dist</span>
+  <span class="na">memory</span><span class="pi">:</span> <span class="s">256MB</span>
+  <span class="na">instances</span><span class="pi">:</span> <span class="s">1</span>
+  <span class="na">buildpack</span><span class="pi">:</span> <span class="s">nodejs_buildpack</span>
+  <span class="na">command</span><span class="pi">:</span> <span class="s">node app.js</span>
+  <span class="na">host</span><span class="pi">:</span> <span class="s">yourapp</span>
+</code></pre></div></div>
+
+<p>Of course this app can run on less memory, as little as 64mb.</p>
+
+<h3 id="build--deploy">Build &amp; Deploy</h3>
+
+<p>It could be handy to deploy the app already, but we will need to change the datasource later on.
+Build the project by right-clicking it and clicking Build &gt; Build Project. You can also run Grunt if you are working with a directory on your local filesystem.
+Clone the git repository locally, or download the project as a zip file from the WebIDE and unpack on your local drive.
+Deploy using <code class="highlighter-rouge">cf push</code> when in a command shell in the root of the project folder.
+When the deploy succeeds, note down the app url, we will need it later on.</p>
+
+<h2 id="configure-and-deploy-portal">Configure and deploy Portal</h2>
+
+<h3 id="activate-portal">Activate Portal</h3>
+
+<p>First, activate the service in your <strong>NEO</strong> account, if not already done. 
+Then, you need to create a new Fiori Launchpad site. When you are in the site admin page, note down, or copy the subdomain. 
+Eg. https://<strong>flpnwc-xxxxxxx</strong>.dispatcher.hana.ondemand.com/sites/adminspace#siteDirectory-show</p>
+
+<h3 id="create-the-site">Create the site</h3>
+
+<p>Next, go to your space in the CloudFoundry account where you want to deploy the Portal site.
+Click ‘Portal’ on the left navigation menu, and then the ‘New Site’ button. Fill in the form and enter flpnwc-xxxxxxx in the SAP Cloud Platform subaccount details.</p>
+
+<p><img alt="Create site" src="/img/portal-on-cf/create-portal-site.jpg" class="image fit" />
+You should now get a new tile. Hit the edit icon to go to the admin space and configure the site to your likings, like you would normally do in the NEO environment.
+Now, when you want to create an app tile, which path should you use? You cannot simply select an existing HTML5 app from the repository like you would normally do.</p>
+
+<p>Right now, you can choose the path, we will configure the destination later: <code class="highlighter-rouge">Component-URL: /frontend-yourapp</code>.</p>
+
+<p>Now, we need to do a couple of things before we can deploy the site.</p>
+
+<h3 id="configure-the-site-for-cloudfoundry">Configure the site for CloudFoundry</h3>
+
+<p>Go to <em>services and tools &gt; Implementation pack</em> and download the <code class="highlighter-rouge">xs-app.json</code> file and <code class="highlighter-rouge">mtad.yaml</code> file.</p>
+
+<p>The xs-app.json contains the url regex that needs to be captured, it could look something like this:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="s2">"routes"</span><span class="p">:[{</span><span class="s2">"localDir"</span><span class="p">:</span><span class="s2">"themes"</span><span class="p">,</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"/themes/(.*)"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cacheControl"</span><span class="p">:</span><span class="s2">"public, max-age=31536000,must-revalidate"</span><span class="p">,</span><span class="s2">"target"</span><span class="p">:</span><span class="s2">"$1"</span><span class="p">},</span><span class="w">
+   
+    </span><span class="p">{</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"^/sci/(.*)"</span><span class="p">,</span><span class="s2">"target"</span><span class="p">:</span><span class="s2">"$1"</span><span class="p">,</span><span class="s2">"destination"</span><span class="p">:</span><span class="s2">"sci"</span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="s2">"source"</span><span class="p">:</span><span class="s2">"^/frontend-yourapp/(.*)"</span><span class="p">,</span><span class="s2">"target"</span><span class="p">:</span><span class="s2">"$1"</span><span class="p">,</span><span class="s2">"destination"</span><span class="p">:</span><span class="s2">"frontend-yourapp"</span><span class="p">},</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This file tells the Portal to redirect urls starting with <em>/sci</em> to point to destination SCI.
+In my case this points to my backend, using SAP Cloud Integration, you can use any name but I have only tried this with internet reachable systems. I still need to try this with on-premise systems that have to be accessed over the SAP Cloud Connector.</p>
+
+<p>The second entry tells urls starting with <em>/frontend-yourapp</em> to point to a destination with the same name. Note that I have used this url as the component url of my SAPUI5 app in the Portal admin space.</p>
+
+<p>When finished upload the file using the button in the implemenation pack.</p>
+
+<p>Next, open the <code class="highlighter-rouge">mtad.yaml</code> file. This one is a little bit more complex…</p>
+
+<p>It could look like this:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="na">_schema-version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">2.0'</span>
+<span class="na">ID</span><span class="pi">:</span> <span class="s">portal-site-xxxxxxxxxxxxxx</span>
+<span class="na">version</span><span class="pi">:</span> <span class="s">1.2.0</span>
+<span class="na">modules</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">site-entry-xxxxxxxxxxxxxx</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s">javascript.nodejs</span>
+    <span class="na">path</span><span class="pi">:</span> <span class="s">site-entry/</span>
+    <span class="na">parameters</span><span class="pi">:</span>
+      <span class="na">memory</span><span class="pi">:</span> <span class="s">256M</span>
+    <span class="na">requires</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">site-host-xxxxxxxxxxxxxx0</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">portal-uaa</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">reels-approuter</span>
+        <span class="na">group</span><span class="pi">:</span> <span class="s">destinations</span>
+        <span class="na">properties</span><span class="pi">:</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">approuter</span>
+          <span class="na">url</span><span class="pi">:</span> <span class="s">~{url}</span>
+          <span class="na">forwardAuthToken</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">demo-sci</span>
+        <span class="na">group</span><span class="pi">:</span> <span class="s">destinations</span>
+        <span class="na">properties</span><span class="pi">:</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">sci</span>
+          <span class="na">url</span><span class="pi">:</span> <span class="s">~{url}</span>
+          <span class="na">forwardAuthToken</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">demo-frontend-yourapp</span>
+        <span class="na">group</span><span class="pi">:</span> <span class="s">destinations</span>
+        <span class="na">properties</span><span class="pi">:</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">frontend-yourapp</span>
+          <span class="na">url</span><span class="pi">:</span> <span class="s">~{url}</span>
+          <span class="na">forwardAuthToken</span><span class="pi">:</span> <span class="no">true</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">sapui5-provider</span>
+        <span class="na">properties</span><span class="pi">:</span>
+          <span class="na">sapui5url</span><span class="pi">:</span> <span class="s1">'</span><span class="s">~{url}'</span>
+      
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">site-content-xxxxxxxxxxxxxx</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s">com.sap.portal.site-content</span>
+    <span class="na">path</span><span class="pi">:</span> <span class="s">site-content/</span>
+    <span class="na">parameters</span><span class="pi">:</span>
+      <span class="na">health-check-type</span><span class="pi">:</span> <span class="s">none</span>
+      <span class="na">memory</span><span class="pi">:</span> <span class="s">128M</span>
+    <span class="na">requires</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">site-client-xxxxxxxxxxxxxx</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">portal-uaa</span>
+<span class="na">resources</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">site-host-xxxxxxxxxxxxxx</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s">org.cloudfoundry.managed-service</span>
+    <span class="na">parameters</span><span class="pi">:</span>
+      <span class="na">service</span><span class="pi">:</span> <span class="s">portal-services</span>
+      <span class="na">service-plan</span><span class="pi">:</span> <span class="s">site-host</span>
+      <span class="na">config</span><span class="pi">:</span>
+        <span class="na">siteId</span><span class="pi">:</span> <span class="s">xxxxxxxxxxxxxx</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">portal-uaa</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s">org.cloudfoundry.existing-service</span>
+    <span class="na">parameters</span><span class="pi">:</span>
+      <span class="na">service-name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">my-xsuaa"</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">sapui5-provider</span>
+    <span class="na">properties</span><span class="pi">:</span>
+      <span class="na">url</span><span class="pi">:</span> <span class="s1">'</span><span class="s">https://sapui5.hana.ondemand.com'</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">site-client-xxxxxxxxxxxxxx</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s">org.cloudfoundry.managed-service</span>
+    <span class="na">parameters</span><span class="pi">:</span>
+      <span class="na">service</span><span class="pi">:</span> <span class="s">portal-services</span>
+      <span class="na">service-plan</span><span class="pi">:</span> <span class="s">site-content</span>
+      <span class="na">config</span><span class="pi">:</span>
+        <span class="na">siteId</span><span class="pi">:</span> <span class="s">xxxxxxxxxxxxxx</span>
+ 
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">demo-sci</span>
+    <span class="na">properties</span><span class="pi">:</span> 
+      <span class="na">url</span><span class="pi">:</span> <span class="s">https://mysubdomain.cfapps.eu10.hana.ondemand.com/api/</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">demo-frontend-yourapp</span>
+    <span class="na">properties</span><span class="pi">:</span> 
+      <span class="na">url</span><span class="pi">:</span> <span class="s">https://yourapp-somesubdomain.cfapps.eu10.hana.ondemand.com/</span>
+</code></pre></div></div>
+
+<p>You can see the mapping of the destinations named before to the right urls. I have two destinations here, one for my backend connection and one for the frontend. The frontend url is the one we wrote down earlier when deploying the SAPUI5 app.
+For the portal to work you also need a XSUAA service instance to bind to. If you don’t already have one, this is the time to create an insance.</p>
+
+<p>If all of this is done, upload the mtad.yaml file as well. Then, hit the ‘Download’ button below. Go back to your Portal dashboard in the <strong>CloudFoundry space</strong>. Click the ‘deploy portal site’ icon on the tile of your portal. Upload the mtar file you just downloaded and let the platform do its work.</p>
+
+<p><img alt="Deploy site" src="/img/portal-on-cf/deploy-portal-site.jpg" class="image fit" /></p>
+
+<h2 id="check-datasource-url-in-the-app">Check datasource url in the app</h2>
+
+<p>A last point of attention would be the datasource in the SAPUI5 app. Make sure the datasource matched the url we configured in the destinations of the portal.</p>
+
+<p>Also, in my experience, the Portal acts as the AppRouter would act. So when using url’s pointing to location behind an AppRouter, it won’t work.</p>
+
+        </div>
+    </div>
+    <div class="share-page" >
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://ordina-sap.github.io/sap%20cloud/2018/07/09/portal-on-cf.html&title=Deploying Fiori apps and Portal on SAP Cloud Foundry&source=https://ordina-sap.github.io" rel="nofollow" target="_blank" title="Share on LinkedIN">
+            <img src="/img/social-media/LinkedIn.png"
+                 alt="Share on LinkedIn" />
+        </a>
+        <a href="https://twitter.com/intent/tweet?text=Deploying Fiori apps and Portal on SAP Cloud Foundry&url=https://ordina-sap.github.io/sap%20cloud/2018/07/09/portal-on-cf.html&via=lifeatordinabe&related=lifeatordinabe" rel="nofollow" target="_blank" title="Share on Twitter">
+            <img src="/img/social-media/Twitter.png"
+                 alt="Share on Twitter" />
+        </a>
+        <a href="https://facebook.com/sharer.php?u=https://ordina-sap.github.io/sap%20cloud/2018/07/09/portal-on-cf.html" rel="nofollow" target="_blank" title="Share on Facebook">
+            <img src="/img/social-media/Facebook.png"
+                 alt="Share on Facebook" />
+        </a>
+    </div>
+</section>
+
+
+<section id="two" class="wrapper alt spotlight style2">
+    
+    <div class="inner">
+        <a href="/author/gert-vermeersch/" class="image spotlight-image">
+            <img src="/img/author/gert.jpg"
+                 alt="" class="p-image"/>
+        </a>
+
+        <div class="content">
+            
+            <p><p>Gert is passionate about SAP Cloud Platform and its services, and IoT in particular. He has an extensive SAP development background, coding skills in ABAP, SAPUI5, Java, Javascript and so on.</p>
+</p>
+            
+        </div>
+    </div>
+    
+</section>
+
+
+
+        </div>
+    </section>
+</div>
+
+
+
+<footer>
+    <div class="contact">
+        <div class="address">
+            <div class="icon"><i class="fa fa-fw fa-home"></i></div>
+            <div class="text">Ordina Belgium<br/>Blarenberglaan 3B,<br/>2800 Mechelen, Belgium</div>
+        </div>
+        <div class="phone">
+            <div class="icon"><i class="fa fa-fw fa-phone"></i></div>
+            <div class="text"><a href="tel:003215295858">+32 15 29 58 58</a></div>
+        </div>
+        <div class="email">
+            <div class="icon"><i class="fa fa-fw fa-envelope-o"></i></div>
+            <div class="text"><a href="mailto:jobs@ordina.be">jobs@ordina.be</a></div>
+        </div>
+    </div>
+    <ul class="social">
+        <li>
+            <a href="https://twitter.com/lifeatordinabe" target="_blank">
+                <i class="fa fa-fw fa-twitter"></i><span>Twitter</span>
+            </a>
+        </li>
+        <li>
+            <a href="https://www.facebook.com/lifeatordinabe" target="_blank">
+                <i class=" fa fa-fw fa-facebook"></i><span>Facebook</span>
+            </a>
+        </li>
+        <li>
+            <a href="https://www.linkedin.com/company/ordina-belgium" target="_blank">
+                <i class=" fa fa-fw fa-linkedin"></i><span>LinkedIn</span>
+            </a>
+        </li>
+        <!-- <li>
+            <a href="/youtube" target="_blank">
+                <i class=" fa fa-fw fa-youtube"></i><span>YouTube</span>
+            </a>
+        </li>
+        <li>
+            <a href="/github" target="_blank">
+                <i class=" fa fa-fw fa-github"></i><span>GitHub</span>
+            </a>
+        </li>
+        <li>
+            <a href="/feed.xml" target="_blank">
+                <i class=" fa fa-fw fa-rss"></i><span>RSS Feed</span>
+            </a>
+        </li> -->
+    </ul>
+    <div class="copyright">
+        &copy; 2018 Ordina. All rights reserved.
+        <br /> Disclaimer: Opinions expressed on this blog reflect the writer's views and not the position of Ordina
+        <img id="analyticsImg" src="" width="1" height="1" style="border: 0px"/>
+    </div>
+</footer>
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrollex.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/jquery.pin.min.js"></script>
+<script src="/js/util.js"></script>
+<!--[if lte IE 8]>
+<script src="/js/ie/respond.min.js"></script><![endif]-->
+
+
+<script>
+    var imageHref = "/img/portal-on-cf/launchpad.png";
+    $(function () {
+        $('body').addClass('toggle');
+    });
+</script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- Disqus -->
+
+
+<!-- Google Analytics -->
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o);
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m);
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-70040502-1', 'auto');
+    ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    window.addEventListener('load', function () {
+        if (window.ga && ga.create) {
+            console.log('GA loaded correctly');
+        } else {
+            console.log('GA is blocked or failed to load - tracking manually...')
+            document.getElementById('analyticsImg').src = 'https://jworks-techblog-analytics.cfapps.io/collect?title=' + document.title;
+        }
+    }, false);
+</script>
+
+<!-- Vertical timeline -->
+<script src="/js/vertical-timeline/modernizr.js"></script>
+<script src="/js/vertical-timeline/main.js"></script>
+
+
+</body>
+</html>

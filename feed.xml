@@ -1,2 +1,186 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.3">Jekyll</generator><link href="https://ordina-sap.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://ordina-sap.github.io/" rel="alternate" type="text/html" /><updated>2018-07-06T14:48:53+00:00</updated><id>https://ordina-sap.github.io/</id><title type="html">Ordina SAP Tech Blog</title><subtitle>We build innovative solutions with Java and JavaScript. To support this mission, we have several Competence Centers. From within those Competence Centers, we provide coaching to the employee and expert advice towards our customer. In order to keep in sync with the latest technologies and the latest trends, we frequently visit conferences around the globe.
-</subtitle></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.3">Jekyll</generator><link href="https://ordina-sap.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://ordina-sap.github.io/" rel="alternate" type="text/html" /><updated>2018-07-09T12:18:36+00:00</updated><id>https://ordina-sap.github.io/</id><title type="html">Ordina SAP Tech Blog</title><subtitle>We build innovative solutions with Java and JavaScript. To support this mission, we have several Competence Centers. From within those Competence Centers, we provide coaching to the employee and expert advice towards our customer. In order to keep in sync with the latest technologies and the latest trends, we frequently visit conferences around the globe.
+</subtitle><entry><title type="html">Deploying Fiori apps and Portal on SAP Cloud Foundry</title><link href="https://ordina-sap.github.io/sap%20cloud/2018/07/09/portal-on-cf.html" rel="alternate" type="text/html" title="Deploying Fiori apps and Portal on SAP Cloud Foundry" /><published>2018-07-09T00:00:00+00:00</published><updated>2018-07-09T00:00:00+00:00</updated><id>https://ordina-sap.github.io/sap%20cloud/2018/07/09/portal-on-cf</id><content type="html" xml:base="https://ordina-sap.github.io/sap%20cloud/2018/07/09/portal-on-cf.html">&lt;h1 id=&quot;deploying-your-fiori-apps-and-fiori-launchpad-on-sap-cloud-foundry&quot;&gt;Deploying your Fiori apps and Fiori Launchpad on SAP Cloud Foundry&lt;/h1&gt;
+
+&lt;p&gt;Building and deploying Fiori apps and installing SAP Portal is easy on the SAP Cloud Platform NEO environment. Since everything is automated and done for you.&lt;/p&gt;
+
+&lt;p&gt;On the SAP Cloud Foundry environment things quickly get a bit more technical. SAP may, or may not improve this in the future by hiding away the technical details. Personally, I like the more technical aspect of CloudFoundry vs NEO. The fact that you know more in detail about what is going on gives you more to work with when something goes wrong. In this article, I’m going to explain how I deployed a couple of SAPUI5 apps on CloudFoundry, configured Portal to use them, and added destinations and security for the whole thing to work.&lt;/p&gt;
+
+&lt;h2 id=&quot;table-of-contents&quot;&gt;Table of contents&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;#what-do-you-need&quot;&gt;What do you need?&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#create-a-manifest&quot;&gt;Create a manifest&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#configure-and-deploy-portal&quot;&gt;Configure and deploy Portal&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#build-and-deploy-app&quot;&gt;Build and deploy app&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;what-do-you-need&quot;&gt;What do you need?&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A text editor of your choice (I really like Visual Studio Code)&lt;/li&gt;
+  &lt;li&gt;The &lt;a href=&quot;https://docs.cloudfoundry.org/cf-cli/install-go-cli.html&quot;&gt;CloudFoundry CLI&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Some kind of SAPUI5 application you want to deploy&lt;/li&gt;
+  &lt;li&gt;SAP Cloud Platform Cloud Foundry account, this can be a trial or productive account&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;create-a-manifest&quot;&gt;Create a manifest&lt;/h2&gt;
+
+&lt;p&gt;If you have experience with developping SAPUI5 apps, you are probably familiar with the &lt;code class=&quot;highlighter-rouge&quot;&gt;neo-app.json&lt;/code&gt; file. This basically tells the NEO HTML5 service what to do with authentication, destinations, where to find the index file… The container we are going to create is not aware of this file and will ignore it. This means that we have to handle everything in the neo-app.json in some other way. The first step is the manifest.yaml. The manifest that we are going to create is not to be confused with the existing manifest.json, which is used by the SAPUI5 bootstrapping process.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;manifest.yaml&lt;/code&gt; has to be created in the root of your project directory. It tells CloudFoundry what kind of buildpack to use, the name, memory limit, host and how to start the application.
+Since a SAPUI5 app is nothing more than a collection of HTML, CSS and JS files to be served, we can use a simple webserver like nginx to host our files.&lt;/p&gt;
+
+&lt;p&gt;This is a working example of a manifest of one of my apps:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;applications&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;YourApp&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;dist&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;256MB&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;instances&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;1&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;buildpack&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;nodejs_buildpack&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;node app.js&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;yourapp&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Of course this app can run on less memory, as little as 64mb.&lt;/p&gt;
+
+&lt;h3 id=&quot;build--deploy&quot;&gt;Build &amp;amp; Deploy&lt;/h3&gt;
+
+&lt;p&gt;It could be handy to deploy the app already, but we will need to change the datasource later on.
+Build the project by right-clicking it and clicking Build &amp;gt; Build Project. You can also run Grunt if you are working with a directory on your local filesystem.
+Clone the git repository locally, or download the project as a zip file from the WebIDE and unpack on your local drive.
+Deploy using &lt;code class=&quot;highlighter-rouge&quot;&gt;cf push&lt;/code&gt; when in a command shell in the root of the project folder.
+When the deploy succeeds, note down the app url, we will need it later on.&lt;/p&gt;
+
+&lt;h2 id=&quot;configure-and-deploy-portal&quot;&gt;Configure and deploy Portal&lt;/h2&gt;
+
+&lt;h3 id=&quot;activate-portal&quot;&gt;Activate Portal&lt;/h3&gt;
+
+&lt;p&gt;First, activate the service in your &lt;strong&gt;NEO&lt;/strong&gt; account, if not already done. 
+Then, you need to create a new Fiori Launchpad site. When you are in the site admin page, note down, or copy the subdomain. 
+Eg. https://&lt;strong&gt;flpnwc-xxxxxxx&lt;/strong&gt;.dispatcher.hana.ondemand.com/sites/adminspace#siteDirectory-show&lt;/p&gt;
+
+&lt;h3 id=&quot;create-the-site&quot;&gt;Create the site&lt;/h3&gt;
+
+&lt;p&gt;Next, go to your space in the CloudFoundry account where you want to deploy the Portal site.
+Click ‘Portal’ on the left navigation menu, and then the ‘New Site’ button. Fill in the form and enter flpnwc-xxxxxxx in the SAP Cloud Platform subaccount details.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&quot;Create site&quot; src=&quot;/img/portal-on-cf/create-portal-site.jpg&quot; class=&quot;image fit&quot; /&gt;
+You should now get a new tile. Hit the edit icon to go to the admin space and configure the site to your likings, like you would normally do in the NEO environment.
+Now, when you want to create an app tile, which path should you use? You cannot simply select an existing HTML5 app from the repository like you would normally do.&lt;/p&gt;
+
+&lt;p&gt;Right now, you can choose the path, we will configure the destination later: &lt;code class=&quot;highlighter-rouge&quot;&gt;Component-URL: /frontend-yourapp&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now, we need to do a couple of things before we can deploy the site.&lt;/p&gt;
+
+&lt;h3 id=&quot;configure-the-site-for-cloudfoundry&quot;&gt;Configure the site for CloudFoundry&lt;/h3&gt;
+
+&lt;p&gt;Go to &lt;em&gt;services and tools &amp;gt; Implementation pack&lt;/em&gt; and download the &lt;code class=&quot;highlighter-rouge&quot;&gt;xs-app.json&lt;/code&gt; file and &lt;code class=&quot;highlighter-rouge&quot;&gt;mtad.yaml&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;The xs-app.json contains the url regex that needs to be captured, it could look something like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;routes&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;localDir&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;themes&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;source&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;/themes/(.*)&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;cacheControl&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;public, max-age=31536000,must-revalidate&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;target&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;$1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+   
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;source&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;^/sci/(.*)&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;target&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;$1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;destination&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;sci&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;source&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;^/frontend-yourapp/(.*)&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;target&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;$1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;destination&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;frontend-yourapp&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This file tells the Portal to redirect urls starting with &lt;em&gt;/sci&lt;/em&gt; to point to destination SCI.
+In my case this points to my backend, using SAP Cloud Integration, you can use any name but I have only tried this with internet reachable systems. I still need to try this with on-premise systems that have to be accessed over the SAP Cloud Connector.&lt;/p&gt;
+
+&lt;p&gt;The second entry tells urls starting with &lt;em&gt;/frontend-yourapp&lt;/em&gt; to point to a destination with the same name. Note that I have used this url as the component url of my SAPUI5 app in the Portal admin space.&lt;/p&gt;
+
+&lt;p&gt;When finished upload the file using the button in the implemenation pack.&lt;/p&gt;
+
+&lt;p&gt;Next, open the &lt;code class=&quot;highlighter-rouge&quot;&gt;mtad.yaml&lt;/code&gt; file. This one is a little bit more complex…&lt;/p&gt;
+
+&lt;p&gt;It could look like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;na&quot;&gt;_schema-version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2.0'&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;ID&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;portal-site-xxxxxxxxxxxxxx&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;1.2.0&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;modules&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;site-entry-xxxxxxxxxxxxxx&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;javascript.nodejs&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;site-entry/&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;256M&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;requires&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;site-host-xxxxxxxxxxxxxx0&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;portal-uaa&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;reels-approuter&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;destinations&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;approuter&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;~{url}&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;forwardAuthToken&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;demo-sci&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;destinations&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sci&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;~{url}&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;forwardAuthToken&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;demo-frontend-yourapp&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;destinations&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;frontend-yourapp&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;~{url}&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;forwardAuthToken&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sapui5-provider&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;sapui5url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;~{url}'&lt;/span&gt;
+      
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;site-content-xxxxxxxxxxxxxx&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;com.sap.portal.site-content&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;site-content/&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;health-check-type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;none&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;memory&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;128M&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;requires&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;site-client-xxxxxxxxxxxxxx&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;portal-uaa&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;site-host-xxxxxxxxxxxxxx&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;org.cloudfoundry.managed-service&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;portal-services&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;service-plan&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;site-host&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;siteId&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;xxxxxxxxxxxxxx&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;portal-uaa&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;org.cloudfoundry.existing-service&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;service-name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;my-xsuaa&quot;&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;sapui5-provider&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;https://sapui5.hana.ondemand.com'&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;site-client-xxxxxxxxxxxxxx&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;org.cloudfoundry.managed-service&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;service&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;portal-services&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;service-plan&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;site-content&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;siteId&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;xxxxxxxxxxxxxx&lt;/span&gt;
+ 
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;demo-sci&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+      &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;https://mysubdomain.cfapps.eu10.hana.ondemand.com/api/&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;demo-frontend-yourapp&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; 
+      &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;https://yourapp-somesubdomain.cfapps.eu10.hana.ondemand.com/&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can see the mapping of the destinations named before to the right urls. I have two destinations here, one for my backend connection and one for the frontend. The frontend url is the one we wrote down earlier when deploying the SAPUI5 app.
+For the portal to work you also need a XSUAA service instance to bind to. If you don’t already have one, this is the time to create an insance.&lt;/p&gt;
+
+&lt;p&gt;If all of this is done, upload the mtad.yaml file as well. Then, hit the ‘Download’ button below. Go back to your Portal dashboard in the &lt;strong&gt;CloudFoundry space&lt;/strong&gt;. Click the ‘deploy portal site’ icon on the tile of your portal. Upload the mtar file you just downloaded and let the platform do its work.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&quot;Deploy site&quot; src=&quot;/img/portal-on-cf/deploy-portal-site.jpg&quot; class=&quot;image fit&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;check-datasource-url-in-the-app&quot;&gt;Check datasource url in the app&lt;/h2&gt;
+
+&lt;p&gt;A last point of attention would be the datasource in the SAPUI5 app. Make sure the datasource matched the url we configured in the destinations of the portal.&lt;/p&gt;
+
+&lt;p&gt;Also, in my experience, the Portal acts as the AppRouter would act. So when using url’s pointing to location behind an AppRouter, it won’t work.&lt;/p&gt;</content><author><name>{&quot;first_name&quot;=&gt;&quot;Gert&quot;, &quot;last_name&quot;=&gt;&quot;Vermeersch&quot;, &quot;github&quot;=&gt;&quot;vermeerschgert&quot;, &quot;twitter&quot;=&gt;&quot;gert_vermeersch&quot;, &quot;linkedin&quot;=&gt;&quot;gertvermeersch&quot;, &quot;permalink&quot;=&gt;&quot;/author/gert-vermeersch/&quot;, &quot;avatar&quot;=&gt;&quot;gert.jpg&quot;, &quot;title&quot;=&gt;&quot;SAP Cloud Architect&quot;, &quot;title2&quot;=&gt;&quot;Practice Manager&quot;, &quot;email&quot;=&gt;&quot;gert.vermeersch@ordina.be&quot;, &quot;phone&quot;=&gt;&quot;0032485890499&quot;, &quot;bio&quot;=&gt;&quot;Gert is passionate about SAP Cloud Platform and its services, and IoT in particular. He has an extensive SAP development background, coding skills in ABAP, SAPUI5, Java, Javascript and so on.&quot;}</name><email>gert.vermeersch@ordina.be</email></author><category term="SAP Cloud" /><category term="SAP Cloud" /><category term="Cloud Foundry" /><category term="Portal" /><category term="SAPUI5" /><category term="Fiori" /><summary type="html">Deploying your Fiori apps and Fiori Launchpad on SAP Cloud Foundry</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://ordina-sap.github.io/img/portal-on-cf/launchpad.png" /></entry></feed>
