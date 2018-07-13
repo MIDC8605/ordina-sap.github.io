@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html>
+<head>
+        <meta charset="utf-8">
+    <meta name="description" content="We build innovative solutions with Java and JavaScript. To support this mission, we have several Competence Centers. From within those Competence Centers, we provide coaching to the employee and expert advice towards our customer. In order to keep in sync with the latest technologies and the latest trends, we frequently visit conferences around the globe.
+">
+    <meta name="keywords" content="Ordina,SAP,Cloud Platform,Cloud Foundry,ABAP,SAP consultant,SAP consultancy,Netweaver,Webdynpro,idocs,EDI">
+    <meta name="author" content="Ordina Belgium">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/favicons/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/img/favicons/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/img/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/img/favicons/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/img/favicons/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="/img/favicons/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="/img/favicons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/img/favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/img/favicons/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="/img/favicons/favicon-128.png" sizes="128x128" />
+
+    
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Unit testing for ABAP 101 and why you should do it - Xana Rasquin">
+    <meta name="twitter:description" content="Ordina SAP Tech Blog">
+    <meta name="twitter:image" content="http://ordina-sap.github.io/img/unit-testing-101/Unit-Testing.jpg"/>
+
+    <!-- Facebook Open Graph -->
+    <meta property="og:url" content="http://ordina-sap.github.io/abap%20unit%20testing/2018/07/11/unit-testing-101.html"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Unit testing for ABAP 101 and why you should do it - Xana Rasquin"/>
+    <meta property="og:description" content="Ordina SAP Tech Blog"/>
+    <meta property="og:image" content="http://ordina-sap.github.io/img/unit-testing-101/Unit-Testing.jpg"/>
+
+    
+    <title>Unit testing for ABAP 101 and why you should do it - Xana Rasquin &mdash; Ordina SAP Tech Blog</title>
+    
+
+        <!-- Styles -->
+    <!-- Font awesome CSS -->
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Magnific Popup -->
+    <link href="/css/magnific-popup.css" rel="stylesheet">
+    <!-- Owl carousel -->
+    <link href="/css/owl.carousel.css" rel="stylesheet">
+
+    <!-- CSS for this page -->
+
+    <!-- Syntax highlighting -->
+    <link href="/css/syntax.css" rel="stylesheet">
+
+
+    <!--[if lte IE 8]>
+    <script src="/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="/css/main.css"/>
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/css/ie9.css"/><![endif]-->
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="/css/ie8.css"/><![endif]-->
+
+    <!-- Custom CSS. Type your CSS code in custom.css file -->
+    <link href="/css/custom.css" rel="stylesheet">
+
+    <!-- Vertical timeline -->
+	<link rel="stylesheet" href="/css/vertical-timeline/style.css"> <!-- Resource style -->
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="#">
+
+    <script src="https://use.typekit.net/gzh0mbm.js"></script>
+    <script>
+        try {
+            Typekit.load({async: true});
+        } catch (e) {
+        }
+    </script>
+</head>
+
+<body>
+<div id="header-image"></div>
+
+
+<!-- Page Wrapper -->
+<div id="page-wrapper">
+
+        <!-- Header -->
+    <header id="header">
+        <h1>
+            <a href="/">
+                Ordina SAP Tech Blog
+            </a>
+        </h1>
+
+        <nav>
+            <a href="#menu">Menu</a>
+            <form action="/search/" method="get" class="header-search search-form">
+                <input type="text" id="search-box-header" name="query" placeholder="Search &hellip;">
+            </form>
+        </nav>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+        <div class="inner">
+            <h2>Menu</h2>
+            <ul class="links">
+                <li class="menu-item"><a href="/">Home</a></li>
+                <li class="menu-item"><a href="/about">About Us</a></li>
+                <li class="menu-item"><a href="/jobs">Jobs</a></li>
+                <!-- <li class="menu-item"><a href="/launch-your-career">Career</a></li> -->
+                <li class="menu-item"><a href="/search">Search</a></li>
+                <li class="menu-item"><a href="/contact">Contact Us</a></li>
+            </ul>
+            <a href="#" class="close">Close</a>
+        </div>
+    </nav>
+
+    <section id="banner">
+        <header>
+            <div class="inner">
+                
+
+                <h2>Unit testing for ABAP 101 and why you should do it</h2>
+                
+
+                
+                    Posted Jul 11, 2018
+
+
+    in <a href="/categories/abap-unit-testing/">ABAP Unit Testing</a>
+
+
+
+    by
+    
+        <a href="/author/xana-rasquin/">Xana Rasquin</a>
+        
+    
+
+
+
+    <br/>
+    <i class="fa fa-tags"></i>
+    
+        <a href="/tags/abap/">ABAP</a>, 
+    
+        <a href="/tags/unit-testing/">Unit Testing</a>, 
+    
+        <a href="/tags/eclipse/">Eclipse</a>
+    
+
+                
+
+                
+
+            </div>
+        </header>
+    </section>
+
+    <section id="wrapper">
+        <div class="inner">
+            <section id="one" class="wrapper spotlight style1 post-body">
+    <div class="inner" style="text-align: left;">
+        <div class="content">
+            <h1 id="unit-testing-for-abap-101-and-why-you-should-do-it">Unit testing for ABAP 101 and why you should do it</h1>
+
+<p>As a developer, you can spend quite a lot of time validating your work. 
+This can mean that you run through your developments step by step, 
+by F5’ing your way through an entire new business process. 
+While this method provides added value in small scenario’s, 
+this still requires your invested attention and errors can still take place. You’re only human after all.
+In today’s world, SAP applications need to be developed and changed at a faster pace. 
+All the while, continuance also needs to be guaranteed. 
+More and more SAP projects also follow an agile flow and DevOps is a more common feature in many organizations. 
+This way of working requires an adjustment in the way developers handle their work.</p>
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ol>
+  <li><a href="#unit-what">Unit what?</a></li>
+  <li><a href="#how-to-implement">How to implement</a></li>
+  <li><a href="#benefits-and-drawbacks">Benefits and drawbacks</a></li>
+  <li><a href="#summary">Summary</a></li>
+</ol>
+
+<h2 id="unit-what">Unit what?</h2>
+
+<p>ABAP unit is an SAP testing tool that enables the ABAP developer to test individual blocks of a process. 
+This can also be automated, to provide a backbone in bigger systems and ensure continued successful processes. 
+Unit tests are defined and implemented as local classes inside a main program. 
+It can be defined for a class, function pool, executable program, or module pool. 
+We will focus on the implementation for class-based programming. 
+A test is organized into classes which contain test methods. Small units are tested within the setup. 
+The purpose of a test method is to check if a certain block in logic returns the desired result. 
+The service class CL_ABAP_UNIT_ASSERT contains methods that can compare actual values 
+that are calculated in the logic with the expected value you provide in the test. 
+When you run a unit test, the results are described in the ABAP Unit result display screen. 
+Here you can see which test methods have failed or succeeded and what the calculated values were.</p>
+
+<p> </p>
+<h2 id="how-to-implement">How to implement</h2>
+
+<p>Now, let’s try to implement a simple unit test for a class. 
+We’ll work with a simple class that simulates a scoreboard. 
+The score can be gained or lost.</p>
+
+<div class="language-abap highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">---</span>
+<span class="k">CLASS</span> <span class="n">ycl_test_scoreboard</span> <span class="k">DEFINITION</span>
+  <span class="k">PUBLIC</span>
+  <span class="k">FINAL</span>
+  <span class="k">CREATE</span> <span class="k">PUBLIC</span> <span class="p">.</span>
+
+  <span class="k">PUBLIC</span> <span class="k">SECTION</span><span class="p">.</span>
+    <span class="k">DATA</span><span class="p">:</span> <span class="n">mv_score</span> <span class="k">TYPE</span> <span class="k">i</span><span class="p">.</span>
+    <span class="k">METHODS</span><span class="p">:</span> <span class="n">add_score</span> <span class="k">IMPORTING</span> <span class="n">iv_score</span> <span class="k">TYPE</span> <span class="k">i</span> <span class="n">iv_type</span> <span class="k">TYPE</span> <span class="k">string</span><span class="p">.</span>
+
+  <span class="k">PROTECTED</span> <span class="k">SECTION</span><span class="p">.</span>
+  <span class="k">PRIVATE</span> <span class="k">SECTION</span><span class="p">.</span>
+<span class="k">ENDCLASS</span><span class="p">.</span>
+</code></pre></div></div>
+
+<p>The implementation of the method could look like this:</p>
+
+<div class="language-abap highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">---</span>
+<span class="k">CLASS</span> <span class="n">ycl_test_scoreboard</span> <span class="k">IMPLEMENTATION</span><span class="p">.</span>
+
+    <span class="k">METHOD</span> <span class="n">add_score</span><span class="p">.</span>
+        <span class="n">mv_score</span> <span class="o">=</span> <span class="k">SWITCH</span> <span class="o">#</span><span class="p">(</span> <span class="n">iv_type</span>
+                        <span class="k">WHEN</span> <span class="s1">'win'</span>  <span class="k">THEN</span> <span class="n">mv_score</span> <span class="o">+</span> <span class="n">iv_score</span>
+                        <span class="k">WHEN</span> <span class="s1">'loss'</span> <span class="k">THEN</span> <span class="n">mv_score</span> <span class="o">-</span> <span class="n">iv_score</span>
+                        <span class="k">ELSE</span> <span class="mi">0</span> <span class="p">).</span>
+    <span class="k">ENDMETHOD</span><span class="p">.</span>
+
+<span class="k">ENDCLASS</span><span class="p">.</span>
+</code></pre></div></div>
+
+<p>Now, let’s get started with our unit tests. Before I start implementing, 
+I like to first determine the scenarios I want to test. 
+For this example, I immediately recognize 3 situations.</p>
+
+<ol>
+  <li>Does the addition of a score work?</li>
+  <li>Does the loss of some score points work?</li>
+  <li>Furthermore, I’d like to test the result for trying to give an unrecognized type for adding a score.</li>
+</ol>
+
+<p>For this tutorial, I’m working in Eclipse. At the bottom of the class editor, 
+there’s a ribbon from which you can navigate to the editor for test classes.</p>
+
+<p><img alt="Ribbon unit test" src="/img/unit-testing-101/ribbon-unit-testing-eclipse.png" class="image fit" /></p>
+
+<p>If you feel more comfortable working in the SAP GUI, 
+you can locate the button at the top right of the screen in SE24:</p>
+
+<p><img alt="SE24 Test Class" src="/img/unit-testing-101/se24-test-class.png" class="image fit" /></p>
+
+<p>We start by defining the test class, as we would for a regular class. The definition does look a bit different though.</p>
+
+<p><strong>PRO TIP</strong>: If you’re working in Eclipse, there is a handy template to generate the basic definition of a test class. Just type ‘testclass’ and trigger the auto-complete.</p>
+
+<p><img alt="Eclipse Test Auto-Complete" src="/img/unit-testing-101/eclipse-test-class-auto.png" class="image fit" /></p>
+
+<p>In the public section, define the methods that will execute the tests. Also define an instance of the class you’re testing. This instance will call the method that contains the logic you want to test. 
+How the definition could be written:</p>
+
+<div class="language-abap highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CLASS</span> <span class="n">lcl_</span> <span class="k">DEFINITION</span> <span class="k">FINAL</span> <span class="k">FOR</span> <span class="k">TESTING</span>
+  <span class="k">DURATION</span> <span class="k">SHORT</span>
+  <span class="k">RISK</span> <span class="k">LEVEL</span> <span class="k">HARMLESS</span><span class="p">.</span>
+
+  <span class="k">PRIVATE</span> <span class="k">SECTION</span><span class="p">.</span>
+    <span class="k">METHODS</span><span class="p">:</span>
+      <span class="n">setup</span><span class="p">,</span>
+      <span class="n">teardown</span><span class="p">,</span>
+      <span class="n">score_test_win</span>     <span class="k">FOR</span> <span class="k">TESTING</span><span class="p">,</span>
+      <span class="n">score_test_loss</span>    <span class="k">FOR</span> <span class="k">TESTING</span><span class="p">,</span>
+      <span class="n">score_test_unknown</span> <span class="k">FOR</span> <span class="k">TESTING</span><span class="p">.</span>
+
+    <span class="k">DATA</span><span class="p">:</span> <span class="n">mo_cut</span> <span class="k">TYPE</span> <span class="k">REF</span> <span class="k">TO</span> <span class="n">ycl_test_scoreboard</span><span class="p">.</span>
+
+<span class="k">ENDCLASS</span><span class="p">.</span>
+</code></pre></div></div>
+
+<p>Notice that we also have a ‘setup’ and ‘teardown’ method. These are predefined methods in ABAP unit and are respectively called before and after each test method in the test class. 
+In setup( ) you can setup your test data which can be leveraged by various different test within the same test class. In our example, we instantiate the object for our scoreboard class and setup a default value for the score attribute.
+In teardown( ) you can clear the test data that is used in the test. It is common practice to use this method to clear objects and attributes and make a clean slate for the next test method.
+The implementation of the test class could look like this:</p>
+
+<div class="language-abap highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CLASS</span> <span class="n">lcl_</span> <span class="k">IMPLEMENTATION</span><span class="p">.</span>
+
+  <span class="k">METHOD</span> <span class="n">setup</span><span class="p">.</span>
+    <span class="n">mo_cut</span> <span class="o">=</span> <span class="k">NEW</span> <span class="o">#</span><span class="p">(</span> <span class="p">).</span>
+    <span class="n">mo_cut</span><span class="o">-&gt;</span><span class="n">mv_score</span> <span class="o">=</span> <span class="mi">50</span><span class="p">.</span>
+  <span class="k">ENDMETHOD</span><span class="p">.</span>
+
+  <span class="k">METHOD</span> <span class="n">teardown</span><span class="p">.</span>
+    <span class="k">CLEAR</span> <span class="n">mo_cut</span><span class="p">.</span>
+  <span class="k">ENDMETHOD</span><span class="p">.</span>
+
+  <span class="k">METHOD</span> <span class="n">score_test_win</span><span class="p">.</span>
+    <span class="n">mo_cut</span><span class="o">-&gt;</span><span class="n">add_score</span><span class="p">(</span> <span class="n">iv_score</span> <span class="o">=</span> <span class="mi">25</span> <span class="n">iv_type</span> <span class="o">=</span> <span class="p">|</span><span class="n">win</span><span class="p">|</span> <span class="p">).</span>
+    <span class="n">cl_abap_unit_assert</span><span class="o">=&gt;</span><span class="n">assert_equals</span><span class="p">(</span> <span class="n">act</span> <span class="o">=</span> <span class="n">mo_cut</span><span class="o">-&gt;</span><span class="n">mv_score</span> <span class="n">exp</span> <span class="o">=</span> <span class="mi">75</span> <span class="p">).</span>
+  <span class="k">ENDMETHOD</span><span class="p">.</span>
+
+  <span class="k">METHOD</span> <span class="n">score_test_loss</span><span class="p">.</span>
+    <span class="n">mo_cut</span><span class="o">-&gt;</span><span class="n">add_score</span><span class="p">(</span> <span class="n">iv_score</span> <span class="o">=</span> <span class="mi">25</span> <span class="n">iv_type</span> <span class="o">=</span> <span class="p">|</span><span class="n">loss</span><span class="p">|</span> <span class="p">).</span>
+    <span class="n">cl_abap_unit_assert</span><span class="o">=&gt;</span><span class="n">assert_equals</span><span class="p">(</span> <span class="n">act</span> <span class="o">=</span> <span class="n">mo_cut</span><span class="o">-&gt;</span><span class="n">mv_score</span> <span class="n">exp</span> <span class="o">=</span> <span class="mi">25</span> <span class="p">).</span>
+  <span class="k">ENDMETHOD</span><span class="p">.</span>
+
+  <span class="k">METHOD</span> <span class="n">score_test_unknown</span><span class="p">.</span>
+    <span class="n">mo_cut</span><span class="o">-&gt;</span><span class="n">add_score</span><span class="p">(</span> <span class="n">iv_score</span> <span class="o">=</span> <span class="mi">25</span> <span class="n">iv_type</span> <span class="o">=</span> <span class="p">|</span><span class="n">kick</span><span class="p">|</span> <span class="p">).</span>
+    <span class="n">cl_abap_unit_assert</span><span class="o">=&gt;</span><span class="n">assert_equals</span><span class="p">(</span> <span class="n">act</span> <span class="o">=</span> <span class="n">mo_cut</span><span class="o">-&gt;</span><span class="n">mv_score</span> <span class="n">exp</span> <span class="o">=</span> <span class="mi">50</span> <span class="p">).</span>
+  <span class="k">ENDMETHOD</span><span class="p">.</span>
+
+<span class="k">ENDCLASS</span><span class="p">.</span>
+</code></pre></div></div>
+
+<p>Now let’s execute a test run. Go to the class in Eclipse and retrieve the context menu:</p>
+
+<p><img alt="Execute Test Run" src="/img/unit-testing-101/execute-test-run.png" class="image fit" /></p>
+
+<p>There’s a result window that displays the number of test methods that were executed and the result of each test. In our case, all methods were successful.</p>
+
+<p><img alt="Test Result" src="/img/unit-testing-101/test-result.png" class="image fit" /></p>
+
+<p>If we change an expected value, the method will fail and the result will also be shown in the ABAP Unit Runner overview.</p>
+
+<div class="language-abap highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">METHOD</span> <span class="n">score_test_unknown</span><span class="p">.</span>
+    <span class="n">mo_cut</span><span class="o">-&gt;</span><span class="n">add_score</span><span class="p">(</span> <span class="n">iv_score</span> <span class="o">=</span> <span class="mi">25</span> <span class="n">iv_type</span> <span class="o">=</span> <span class="p">|</span><span class="n">kick</span><span class="p">|</span> <span class="p">).</span>
+    <span class="n">cl_abap_unit_assert</span><span class="o">=&gt;</span><span class="n">assert_equals</span><span class="p">(</span> <span class="n">act</span> <span class="o">=</span> <span class="n">mo_cut</span><span class="o">-&gt;</span><span class="n">mv_score</span> <span class="n">exp</span> <span class="o">=</span> <span class="mi">50</span> <span class="p">).</span>
+ <span class="k">ENDMETHOD</span><span class="p">.</span>
+</code></pre></div></div>
+
+<p>This would fail as the logic we implemented in our scoreboard class would return zero for an unknown type of score. 
+The overview displays which method failed, what the actual value is, and at what line the code went wrong.</p>
+
+<h2 id="benefits-and-drawbacks">Benefits and drawbacks</h2>
+
+<p>A huge benefit that I have personally experienced, is that a process logic remains tested during refactoring. 
+As a consultant, you’re often placed in an environment with existing code. You don’t always get the luxury of creating new stuff from scratch. 
+When an existing solution needs to be adjusted, I find It’s very helpful if it’s been unit tested. This helps to ensure continuation of existing processes.</p>
+
+<p>It can also be that through upgrades, new syntax and processing capabilities are introduced that you might want to use in certain developments. 
+Here it can be useful if you’ve written some unit tests to aid the refactoring process.</p>
+
+<p>When you’re writing unit tests, it can sometimes be difficult to find all the scenario’s you want to test. 
+In a big process, it’s not always easy to compartmentalize logic into smaller blocks for unit tests. 
+Another drawback is that the performance or quality of a unit test is directly dependent on the developer responsible for writing it.</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>ABAP unit is a testing tool that provides developers the opportunity to test their code. Unit tests are defined and 
+implemented as local classes inside a main program and can be used for a class, function pool, executable program, or module pool. 
+Test methods are used to check if a certain part of the process returns the desired result.</p>
+
+<p>Unit tests are easy to implement. It helps developers to distinguish capabilities of existing code and aids them in refactoring operations. 
+The determination of scenario’s can be a challenge and the quality of the tests depends on the covered scenario’s. 
+It’s the developer’s responsibility to provide a good test which covers the most relevant process outcomes.</p>
+
+        </div>
+    </div>
+    <div class="share-page" >
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://ordina-sap.github.io/abap%20unit%20testing/2018/07/11/unit-testing-101.html&title=Unit testing for ABAP 101 and why you should do it&source=https://ordina-sap.github.io" rel="nofollow" target="_blank" title="Share on LinkedIN">
+            <img src="/img/social-media/LinkedIn.png"
+                 alt="Share on LinkedIn" />
+        </a>
+        <a href="https://twitter.com/intent/tweet?text=Unit testing for ABAP 101 and why you should do it&url=https://ordina-sap.github.io/abap%20unit%20testing/2018/07/11/unit-testing-101.html&via=lifeatordinabe&related=lifeatordinabe" rel="nofollow" target="_blank" title="Share on Twitter">
+            <img src="/img/social-media/Twitter.png"
+                 alt="Share on Twitter" />
+        </a>
+        <a href="https://facebook.com/sharer.php?u=https://ordina-sap.github.io/abap%20unit%20testing/2018/07/11/unit-testing-101.html" rel="nofollow" target="_blank" title="Share on Facebook">
+            <img src="/img/social-media/Facebook.png"
+                 alt="Share on Facebook" />
+        </a>
+    </div>
+</section>
+
+
+<section id="two" class="wrapper alt spotlight style2">
+    
+    <div class="inner">
+        <a href="/author/xana-rasquin/" class="image spotlight-image">
+            <img src="/img/author/xana.jpg"
+                 alt="" class="p-image"/>
+        </a>
+
+        <div class="content">
+            
+        </div>
+    </div>
+    
+</section>
+
+
+
+        </div>
+    </section>
+</div>
+
+
+
+<footer>
+    <div class="contact">
+        <div class="address">
+            <div class="icon"><i class="fa fa-fw fa-home"></i></div>
+            <div class="text">Ordina Belgium<br/>Blarenberglaan 3B,<br/>2800 Mechelen, Belgium</div>
+        </div>
+        <div class="phone">
+            <div class="icon"><i class="fa fa-fw fa-phone"></i></div>
+            <div class="text"><a href="tel:003215295858">+32 15 29 58 58</a></div>
+        </div>
+        <div class="email">
+            <div class="icon"><i class="fa fa-fw fa-envelope-o"></i></div>
+            <div class="text"><a href="mailto:jobs@ordina.be">jobs@ordina.be</a></div>
+        </div>
+    </div>
+    <ul class="social">
+        <li>
+            <a href="https://twitter.com/lifeatordinabe" target="_blank">
+                <i class="fa fa-fw fa-twitter"></i><span>Twitter</span>
+            </a>
+        </li>
+        <li>
+            <a href="https://www.facebook.com/lifeatordinabe" target="_blank">
+                <i class=" fa fa-fw fa-facebook"></i><span>Facebook</span>
+            </a>
+        </li>
+        <li>
+            <a href="https://www.linkedin.com/company/ordina-belgium" target="_blank">
+                <i class=" fa fa-fw fa-linkedin"></i><span>LinkedIn</span>
+            </a>
+        </li>
+        <!-- <li>
+            <a href="/youtube" target="_blank">
+                <i class=" fa fa-fw fa-youtube"></i><span>YouTube</span>
+            </a>
+        </li>
+        <li>
+            <a href="/github" target="_blank">
+                <i class=" fa fa-fw fa-github"></i><span>GitHub</span>
+            </a>
+        </li>
+        <li>
+            <a href="/feed.xml" target="_blank">
+                <i class=" fa fa-fw fa-rss"></i><span>RSS Feed</span>
+            </a>
+        </li> -->
+    </ul>
+    <div class="copyright">
+        &copy; 2018 Ordina. All rights reserved.
+        <br /> Disclaimer: Opinions expressed on this blog reflect the writer's views and not the position of Ordina
+        <img id="analyticsImg" src="" width="1" height="1" style="border: 0px"/>
+    </div>
+</footer>
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.scrollex.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/skel.min.js"></script>
+<script src="/js/jquery.pin.min.js"></script>
+<script src="/js/util.js"></script>
+<!--[if lte IE 8]>
+<script src="/js/ie/respond.min.js"></script><![endif]-->
+
+
+<script>
+    var imageHref = "/img/unit-testing-101/Unit-Testing.jpg";
+    $(function () {
+        $('body').addClass('toggle');
+    });
+</script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- Disqus -->
+
+
+<!-- Google Analytics -->
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o);
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m);
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-70040502-1', 'auto');
+    ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+    window.addEventListener('load', function () {
+        if (window.ga && ga.create) {
+            console.log('GA loaded correctly');
+        } else {
+            console.log('GA is blocked or failed to load - tracking manually...')
+            document.getElementById('analyticsImg').src = 'https://jworks-techblog-analytics.cfapps.io/collect?title=' + document.title;
+        }
+    }, false);
+</script>
+
+<!-- Vertical timeline -->
+<script src="/js/vertical-timeline/modernizr.js"></script>
+<script src="/js/vertical-timeline/main.js"></script>
+
+
+</body>
+</html>
