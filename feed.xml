@@ -1,5 +1,105 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://ordina-sap.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://ordina-sap.github.io/" rel="alternate" type="text/html" /><updated>2019-03-04T15:32:15+00:00</updated><id>https://ordina-sap.github.io/feed.xml</id><title type="html">Ordina SAP Tech Blog</title><subtitle>We build innovative solutions with Java and JavaScript. To support this mission, we have several Competence Centers. From within those Competence Centers, we provide coaching to the employee and expert advice towards our customer. In order to keep in sync with the latest technologies and the latest trends, we frequently visit conferences around the globe.
-</subtitle><entry><title type="html">Unit testing for ABAP 101 and why you should do it</title><link href="https://ordina-sap.github.io/abap%20unit%20testing/2018/07/11/unit-testing-101.html" rel="alternate" type="text/html" title="Unit testing for ABAP 101 and why you should do it" /><published>2018-07-11T00:00:00+00:00</published><updated>2018-07-11T00:00:00+00:00</updated><id>https://ordina-sap.github.io/abap%20unit%20testing/2018/07/11/unit-testing-101</id><content type="html" xml:base="https://ordina-sap.github.io/abap%20unit%20testing/2018/07/11/unit-testing-101.html">&lt;h1 id=&quot;unit-testing-for-abap-101-and-why-you-should-do-it&quot;&gt;Unit testing for ABAP 101 and why you should do it&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://ordina-sap.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://ordina-sap.github.io/" rel="alternate" type="text/html" /><updated>2019-03-28T16:06:35+00:00</updated><id>https://ordina-sap.github.io/feed.xml</id><title type="html">Ordina SAP Tech Blog</title><subtitle>We build innovative solutions with Java and JavaScript. To support this mission, we have several Competence Centers. From within those Competence Centers, we provide coaching to the employee and expert advice towards our customer. In order to keep in sync with the latest technologies and the latest trends, we frequently visit conferences around the globe.
+</subtitle><entry><title type="html">How to create a blog post on this blog</title><link href="https://ordina-sap.github.io/git/2019/03/27/how-to-blog.html" rel="alternate" type="text/html" title="How to create a blog post on this blog" /><published>2019-03-27T00:00:00+00:00</published><updated>2019-03-27T00:00:00+00:00</updated><id>https://ordina-sap.github.io/git/2019/03/27/how-to-blog</id><content type="html" xml:base="https://ordina-sap.github.io/git/2019/03/27/how-to-blog.html">&lt;h1 id=&quot;how-to-blog-on-this-blog&quot;&gt;How to blog on this blog&lt;/h1&gt;
+
+&lt;p&gt;In the SAP world, not everyone needs or uses Git everyday. This short introduction aimed at Ordina SAP members will teach you how to write a blog post on this site. During this tutorial, you will also learn the basics of Git.&lt;/p&gt;
+
+&lt;h2 id=&quot;table-of-contents&quot;&gt;Table of contents&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#table-of-contents&quot;&gt;Table of contents&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#prerequisites&quot;&gt;Prerequisites&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#clone-the-blog&quot;&gt;Clone the blog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#create-a-new-feature&quot;&gt;Create a new feature&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#write-your-blog-entry&quot;&gt;Write your blog entry&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#commit-and-push-your-changes&quot;&gt;Commit and push your changes&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#create-a-pull-request&quot;&gt;Create a pull request&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
+
+&lt;p&gt;To write a new blog post, you only need one tool: Git, you can get it &lt;a href=&quot;https://git-scm.com/downloads&quot;&gt;here&lt;/a&gt;. To make life easier, I also recommend to install &lt;a href=&quot;https://www.sourcetreeapp.com/&quot;&gt;Sourcetree&lt;/a&gt; or another graphical git tool. It is especially useful for new git users or people who don’t feel at home on the command line.&lt;/p&gt;
+
+&lt;p&gt;You can write the blog post just using notepad or any editor, but I recommend a more savvy editor like Visual Studio Code with a Markdown plugin.&lt;/p&gt;
+
+&lt;p&gt;You need to have an accout on Github and be a member of the SAP team on Github before you can really do anything.&lt;/p&gt;
+
+&lt;p&gt;If you want to test and run the blog locally, you need to install Docker. In the Readme file of the repository is described how to run it.&lt;/p&gt;
+
+&lt;h2 id=&quot;clone-the-blog&quot;&gt;Clone the blog&lt;/h2&gt;
+
+&lt;p&gt;By cloning the blog, you will take a copy of the source code (the repository) from Github and put it on your local drive. After you have written your article, you can ‘push’ the changes to Github again. Another person who has cloned the repository before can then ‘pull’ your changes into his local copy. This way everyone stays in sync.&lt;/p&gt;
+
+&lt;p&gt;You can either clone the repository using the git command line:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/ordina-sap/ordina-sap.github.io.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Using Sourcetree:&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&quot;Create site&quot; src=&quot;/img/how-to-blog/git-clone.jpg&quot; class=&quot;image fit&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After the clone operation, you will have a local copy of the blog on your computer.&lt;/p&gt;
+
+&lt;h2 id=&quot;create-a-new-feature&quot;&gt;Create a new feature&lt;/h2&gt;
+
+&lt;p&gt;Git works with branches, this means that you can kind of split of code and work on something entirely isolated from other people’s changes. This is not the entire story but enough to work on a new blog post ;-).&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git checkout -b feature/2019-03-27-how-to-blog
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;or using Sourcetree&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&quot;Create site&quot; src=&quot;/img/how-to-blog/create-branch.jpg&quot; class=&quot;image fit&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&quot;Create site&quot; src=&quot;/img/how-to-blog/create-branch-dialog.jpg&quot; class=&quot;image fit&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After creating the branch you can start writing the actual article.&lt;/p&gt;
+
+&lt;h2 id=&quot;write-your-blog-entry&quot;&gt;Write your blog entry&lt;/h2&gt;
+
+&lt;p&gt;Go to the folder where you cloned the git repository, or open it with Visual Studio Code. Create a new file in the ‘_posts’ folder, e.g.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2019-03-27-how-to-blog.md
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you’re unfamiliar with MarkDown, try looking at existing articles to see how it works. For instance, you will see that every post starts with a header.&lt;/p&gt;
+
+&lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;layout&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;post&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;authors&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;gert_vermeersch&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;How&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;to&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;blog&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;blog'&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/img/how-to-blog/git-logo.png&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;tags&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;git&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;blog&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;category&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Git&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;comments&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;nn&quot;&gt;---&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;commit-and-push-your-changes&quot;&gt;Commit and push your changes&lt;/h2&gt;
+
+&lt;p&gt;Now you need to change your changes into a commit, and push them to Github. You can do this as many times as you like. As long as you don’t merge your changes with the ‘source’ branch, nothing will get published.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git add .
+git commit -m &quot;First version of the post&quot;
+git push
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img alt=&quot;Create site&quot; src=&quot;/img/how-to-blog/git-push-cmd.jpg&quot; class=&quot;image fit&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;or, you can use Sourcetree as well:&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&quot;Create site&quot; src=&quot;/img/how-to-blog/git-push-sourcetree.jpg&quot; class=&quot;image fit&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;create-a-pull-request&quot;&gt;Create a pull request&lt;/h2&gt;
+
+&lt;p&gt;Go to the &lt;a href=&quot;https://github.com/ordina-sap/ordina-sap.github.io&quot;&gt;Github page&lt;/a&gt; of Ordina SAP&lt;/p&gt;
+
+&lt;p&gt;If you just pushed your code you will see a button to create a pull request.
+Alternatively you can select your branch and click ‘New pull request’. In the next screen make sure you are merging your branch into ‘source’, as displayed below.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt=&quot;Create site&quot; src=&quot;/img/how-to-blog/create-pull-request-step2.jpg&quot; class=&quot;image fit&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After Creating the pull request, someone will review your submission, and if approved, will merge your code into the ‘source’ branch. Then Codeship, a CI/CD tool, will pick up and compile a new version of the blog.&lt;/p&gt;
+
+&lt;p&gt;Happy blogging!&lt;/p&gt;</content><author><name>{&quot;first_name&quot;=&gt;&quot;Gert&quot;, &quot;last_name&quot;=&gt;&quot;Vermeersch&quot;, &quot;github&quot;=&gt;&quot;vermeerschgert&quot;, &quot;twitter&quot;=&gt;&quot;gert_vermeersch&quot;, &quot;linkedin&quot;=&gt;&quot;gertvermeersch&quot;, &quot;permalink&quot;=&gt;&quot;/author/gert-vermeersch/&quot;, &quot;avatar&quot;=&gt;&quot;gert.jpg&quot;, &quot;title&quot;=&gt;&quot;SAP Cloud Architect&quot;, &quot;title2&quot;=&gt;&quot;Practice Manager&quot;, &quot;email&quot;=&gt;&quot;gert.vermeersch@ordina.be&quot;, &quot;phone&quot;=&gt;&quot;0032485890499&quot;, &quot;bio&quot;=&gt;&quot;Gert is passionate about SAP Cloud Platform and its services, and IoT in particular. He has an extensive SAP development background, coding skills in ABAP, SAPUI5, Java, Javascript and so on.&quot;}</name><email>gert.vermeersch@ordina.be</email></author><category term="Git" /><category term="git" /><category term="blog" /><summary type="html">How to blog on this blog</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://ordina-sap.github.io/img/how-to-blog/git-logo.png" /></entry><entry><title type="html">Unit testing for ABAP 101 and why you should do it</title><link href="https://ordina-sap.github.io/abap%20unit%20testing/2018/07/11/unit-testing-101.html" rel="alternate" type="text/html" title="Unit testing for ABAP 101 and why you should do it" /><published>2018-07-11T00:00:00+00:00</published><updated>2018-07-11T00:00:00+00:00</updated><id>https://ordina-sap.github.io/abap%20unit%20testing/2018/07/11/unit-testing-101</id><content type="html" xml:base="https://ordina-sap.github.io/abap%20unit%20testing/2018/07/11/unit-testing-101.html">&lt;h1 id=&quot;unit-testing-for-abap-101-and-why-you-should-do-it&quot;&gt;Unit testing for ABAP 101 and why you should do it&lt;/h1&gt;
 
 &lt;p&gt;As a developer, you can spend quite a lot of time validating your work. 
 This can mean that you run through your developments step by step, 
