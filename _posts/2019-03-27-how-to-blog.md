@@ -13,12 +13,13 @@ comments: false
 In the SAP world, not everyone needs or uses Git everyday. This short introduction aimed at Ordina SAP members will teach you how to write a blog post on this site. During this tutorial, you will also learn the basics of Git.
 
 ## Table of contents
-- [How to blog on this blog](#how-to-blog-on-this-blog)
   - [Table of contents](#table-of-contents)
   - [Prerequisites](#prerequisites)
   - [Clone the blog](#clone-the-blog)
   - [Create a new feature](#create-a-new-feature)
   - [Write your blog entry](#write-your-blog-entry)
+  - [Commit and push your changes](#commit-and-push-your-changes)
+  - [Create a pull request](#create-a-pull-request)
 
 ## Prerequisites
 
@@ -83,4 +84,32 @@ comments: false
 ---
 ``` 
 
+## Commit and push your changes
 
+Now you need to change your changes into a commit, and push them to Github. You can do this as many times as you like. As long as you don't merge your changes with the 'source' branch, nothing will get published.
+
+```
+git add .
+git commit -m "First version of the post"
+git push
+```
+
+<img alt="Create site" src="{{ '/img/how-to-blog/git-push-cmd.jpg' | prepend: site.baseurl }}" class="image fit">
+
+or, you can use Sourcetree as well:
+
+
+<img alt="Create site" src="{{ '/img/how-to-blog/git-push-sourcetree.jpg' | prepend: site.baseurl }}" class="image fit">
+
+## Create a pull request
+
+Go to the [Github page](https://github.com/ordina-sap/ordina-sap.github.io) of Ordina SAP
+
+If you just pushed your code you will see a button to create a pull request.
+Alternatively you can select your branch and click 'New pull request'. In the next screen make sure you are merging your branch into 'source', as displayed below.
+
+<img alt="Create site" src="{{ '/img/how-to-blog/create-pull-request-step2.jpg' | prepend: site.baseurl }}" class="image fit">
+
+After Creating the pull request, someone will review your submission, and if approved, will merge your code into the 'source' branch. Then Codeship, a CI/CD tool, will pick up and compile a new version of the blog.
+
+Happy blogging!
